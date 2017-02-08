@@ -1,0 +1,4 @@
+exports['counter 1'] = "<div server-rendered=\"true\">\n    counter: 0\n  </div>"
+
+exports['render counter 1'] = "<div server-rendered=\"true\">\n    counter: 0\n  </div>"
+
