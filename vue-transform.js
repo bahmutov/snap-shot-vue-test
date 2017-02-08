@@ -1,22 +1,22 @@
+const templateRegex = /<template>([\s\S]*)<\/template>/gm;
+const scriptRegex = /<script>([\s\S]*)<\/script>/gm;
+const babelJest = require('babel-jest');
+
 module.exports = {
-  process(src, path) {
-    const loader = require('vue-loader')
-    const config = {
-      cacheable() {},
-      options: {
-        target: 'node'
-      },
-      loaders: [],
-      resourcePath: path,
-      _compiler: {
-        context: path
-      }
-    }
-    // console.log(loader)
-    if (path.endsWith('.vue')) {
-      console.log('transforming file', path)
-      return loader.call(config, src)
-    }
-    return src;
-  },
-};
+  process(src, filepath, config, transformOptions) {
+    console.log('transforming vue file', filepath)
+    templateRegex.lastIndex = scriptRegex.lastIndex = 0;
+
+    const template = templateRegex.exec(src)[1];
+    return `${
+      babelJest.process(
+        scriptRegex.exec(src)[1],
+        filepath + '.js', // Adding a fake .js extension to activate babel-jest.
+        config,
+        transformOptions
+      )
+    };
+    exports.default['template']=\`${template}\`;
+    `;
+  }
+}

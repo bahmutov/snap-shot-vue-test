@@ -1,0 +1,5 @@
+exports[`test counter 1`] = `
+"<div server-rendered=\"true\">
+    counter: 0
+  </div>"
+`;
